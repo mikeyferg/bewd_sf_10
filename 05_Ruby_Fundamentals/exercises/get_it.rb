@@ -14,11 +14,61 @@
 require 'rest-client'
 require 'pry'
 require 'json'
+require 'csv'
 
+@stories_array= []
 def connect_to_api(url)
-  get_data = RestClient.get(url)
-  JSON.parse(get_data)
+  response = RestClient.get(url)
+  JSON.parse(response)
 end
 
+def find_stories(response)
+  stories = response['data']['children']
+  puts "****** Reddit has blessed us with #{stories.length} stories ********"
+  return stories
+end
+
+def print_stories(stories)
+  stories.each do |story|
+    puts "Title: #{story['data']['title']}"
+    create_story_hash(story)
+  end
+end
+
+def create_story_hash(story)
+  story_hash = {title: story['data']['title'],
+    upvotes: story['data']['ups'],
+    category: story['data']['subreddit']
+  }
+  create_stories_array(story_hash)
+end
+
+def create_stories_array(story_hash)
+  @stories_array.push(story_hash)
+end
+
+
 reddit_url = "http://www.reddit.com/.json"
-connect_to_api(reddit_url)
+reddit_json_response = connect_to_api(reddit_url)
+stories = find_stories(reddit_json_response)
+print_stories(stories)
+
+
+
+#1.  create new holder array, 2.iterate through @stories_array and 3.for each hash put the values in array
+val_array = []
+@stories_array.each do |obj|
+  holder_array =[]
+  obj.each do |key, value|
+    holder_array.push(value)
+  end
+    val_array.push(holder_array)
+end
+
+
+CSV.open('file2.csv', 'a+') do |csv|
+  val_array.each do |row|
+    csv << row
+  end
+end
+#puts vals_csv
