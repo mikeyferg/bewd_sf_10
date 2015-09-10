@@ -1,0 +1,13 @@
+<div class="col-12">
+  <h1>Books</h1>
+  <p>Our Book Collections</p>
+
+  <div class="well">
+    <% @books.each do |book| %>
+    <ul>
+      <li><%= book.title %></li>
+      <li><%= book.author %></li>
+    </ul>
+    <% end %>
+  </div>
+</dov>
