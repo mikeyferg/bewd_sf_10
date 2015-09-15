@@ -1,2 +1,10 @@
-<h1>Books#edit</h1>
-<p>Find me in app/views/books/edit.html.erb</p>
+<div class="col-xs-12">
+  <div class="well">
+  <h1 style="color:#cc3333;"> Edit Book </h1>
+  <%= simple_form_for @book do |f| %>
+    <%= f.input :title %>
+    <%= f.input :author %>
+    <%= f.button :submit %>
+  <% end %>
+  </div>
+</div>

@@ -1,2 +1,6 @@
-<h1>Books#show</h1>
-<p>Find me in app/views/books/show.html.erb</p>
+<div class="col-12-xs">
+  <h1>Title:<%= @book.title  %></h1>
+  <ul>Author:<%= @book.author %></ul>
+  <li><%= link_to "Edit", edit_book_path(@book) %></li>
+  <%= link_to 'Delete', book_path(@book), :method => :delete, data: { confirm: 'Are you sure?' } %>
+</div>
